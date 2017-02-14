@@ -15,11 +15,13 @@
 static Texture *tex = NULL;
 static uint64_t start_time = 0;
 
-INITIALIZE {
+INITIALIZE
+{
     tex = LoadTexturePNG("app0:data/hbn.png");
 }
 
-RENDER {
+RENDER
+{
     StartDrawing();
     SetClearColor(0xffffffff);
     ClearScreen();
@@ -27,29 +29,33 @@ RENDER {
     Flip();
 }
 
-UPDATE {
+UPDATE
+{
     uint64_t cur_time = sceKernelGetSystemTimeWide();
 
-    if(cur_time - start_time > SPLASH_TIME){
+    if (cur_time - start_time > SPLASH_TIME)
+    {
         Scene *new_scene = GekihenScene_Construct();
         ReplaceCurrentScene(man, new_scene);
     }
 }
 
-DESTROY {
-
+DESTROY
+{
 }
 
-ENTER {
+ENTER
+{
     start_time = sceKernelGetSystemTimeWide();
 }
 
-EXIT {
-    
+EXIT
+{
 }
 CONSTRUCTOR
 
-Scene*
-EntryScene_Construct(void) {
-    return NEW(EntryScene) ("EntryScene");
+Scene *
+EntryScene_Construct(void)
+{
+    return NEW(EntryScene)("EntryScene");
 }

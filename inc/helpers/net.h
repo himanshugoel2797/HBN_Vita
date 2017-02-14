@@ -3,19 +3,14 @@
 
 #include <stdint.h>
 
-void
-InitializeNet(void);
+void InitializeNet(void);
 
-int
-NetIsInitialized(void);
+int NetIsInitialized(void);
 
-void
-GetCurrentIP(char ip[16]);
+void GetCurrentIP(char ip[16]);
 
-void
-GetDHCPName(char dst[256]);
+void GetDHCPName(char dst[256]);
 
-int 
-DownloadFile(const char *remote, const char *loc);
+int DownloadFile(const char *remote, const char *loc);
 
 #endif

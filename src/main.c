@@ -4,8 +4,8 @@
 #include "helpers/display.h"
 #include "helpers/net.h"
 
-
-int main(){
+int main()
+{
 
     //Initialize required services
     InitializeNet();

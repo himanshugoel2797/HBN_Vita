@@ -55,6 +55,8 @@ add_executable(psvhbn
   src/helpers/display.c
   src/helpers/net.c
   src/helpers/json.c
+  src/helpers/file.c
+  src/helpers/hbn_coms.c
   src/scenes/entry_scene.c
   src/scenes/gekihen_scene.c
   src/main.c

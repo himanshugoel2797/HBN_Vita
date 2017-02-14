@@ -6,41 +6,31 @@
 
 #include <psp2/system_param.h>
 
-typedef struct {
+typedef struct
+{
 
 } HomebrewInfo;
 
-void
-InitializeComs(void);
+void InitializeComs(void);
 
-int
-SetLanguage(int name);
+int SetLanguage(int name);
 
-int
-CheckForUpdates(void);
+int CheckForUpdates(void);
 
-int
-ApplyUpdate(void);
+int ApplyUpdate(void);
 
-int
-GetCategoryCount(void);
+int GetCategoryCount(void);
 
-void
-GetCategoryName(int index, char name[256]);
+void GetCategoryName(int index, char name[256]);
 
-int
-GetSubCategoryCount(int cat);
+int GetSubCategoryCount(int cat);
 
-void
-GetSubCategoryName(int cat, int index, char name[256]);
+void GetSubCategoryName(int cat, int index, char name[256]);
 
-int
-GetSubCategoryHomebrewCount(int cat, int sub_cat);
+int GetSubCategoryHomebrewCount(int cat, int sub_cat);
 
-int
-GetSubCategoryHomebrewID(int cat, int sub_cat);
+int GetSubCategoryHomebrewID(int cat, int sub_cat);
 
-int
-GetHomebrewInfo(int id, HomebrewInfo *info);
+int GetHomebrewInfo(int id, HomebrewInfo *info);
 
 #endif

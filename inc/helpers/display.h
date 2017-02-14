@@ -9,31 +9,23 @@
 
 typedef vita2d_texture Texture;
 
-void
-InitializeDisplay(void);
+void InitializeDisplay(void);
 
-void
-WriteString(int x, int y, uint32_t fg, float sz, const char *str, ...);
+void WriteString(int x, int y, uint32_t fg, float sz, const char *str, ...);
 
-void
-SetClearColor(uint32_t color);
+void SetClearColor(uint32_t color);
 
-void
-ClearScreen(void);
+void ClearScreen(void);
 
-void
-StartDrawing(void);
+void StartDrawing(void);
 
-void
-Flip(void);
+void Flip(void);
 
-Texture*
+Texture *
 LoadTexturePNG(const char *file);
 
-void
-FreeTexture(Texture *tex);
+void FreeTexture(Texture *tex);
 
-void
-DrawTexture(const Texture *tex, int x, int y);
+void DrawTexture(const Texture *tex, int x, int y);
 
 #endif

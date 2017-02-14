@@ -7,35 +7,41 @@
 typedef struct SceneManager SceneManager;
 typedef struct Scene Scene;
 
-struct Scene{
-      char name[256];
-      int ref_count;
-      void *state;
+struct Scene
+{
+    char name[256];
+    int ref_count;
+    void *state;
 
-      void (*Initialize)(Scene *cur);
-      void (*Render)(Scene *cur, SceneManager *man, uint32_t time);
-      void (*Update)(Scene *cur, SceneManager *man, uint32_t time);
-      void (*Destroy)(Scene *cur);
-      void (*Enter)(Scene *cur, Scene *prev);
-      void (*Exit)(Scene *cur, Scene *next);
+    void (*Initialize)(Scene *cur);
+    void (*Render)(Scene *cur, SceneManager *man, uint32_t time);
+    void (*Update)(Scene *cur, SceneManager *man, uint32_t time);
+    void (*Destroy)(Scene *cur);
+    void (*Enter)(Scene *cur, Scene *prev);
+    void (*Exit)(Scene *cur, Scene *next);
 };
 
-#define INITIALIZE_BASE(x) static void Initialize_##x (Scene *cur)
-#define RENDER_BASE(x) static void Render_##x (Scene *cur, SceneManager *man, uint32_t time)
-#define UPDATE_BASE(x) static void Update_##x (Scene *cur, SceneManager *man, uint32_t time)
-#define DESTROY_BASE(x) static void Destroy_##x (Scene *cur)
-#define ENTER_BASE(x) static void Enter_##x (Scene *cur, Scene *prev)
-#define EXIT_BASE(x) static void Exit_##x (Scene *cur, Scene *next)
+#define INITIALIZE_BASE(x) static void Initialize_##x(Scene *cur)
+#define RENDER_BASE(x) static void Render_##x(Scene *cur, SceneManager *man, uint32_t time)
+#define UPDATE_BASE(x) static void Update_##x(Scene *cur, SceneManager *man, uint32_t time)
+#define DESTROY_BASE(x) static void Destroy_##x(Scene *cur)
+#define ENTER_BASE(x) static void Enter_##x(Scene *cur, Scene *prev)
+#define EXIT_BASE(x) static void Exit_##x(Scene *cur, Scene *next)
 
-#define CONSTRUCTOR_BASE(x) static Scene* Construct_##x (const char name[256]) { Scene *tmp = CreateScene(name); \
-                                                                            if(tmp == NULL)return NULL; \
-                                                                            tmp->Initialize = Initialize_##x ; \
-                                                                            tmp->Render = Render_##x ; \
-                                                                            tmp->Update = Update_##x ; \
-                                                                            tmp->Destroy = Destroy_##x ; \
-                                                                            tmp->Enter = Enter_##x ; \
-                                                                            tmp->Exit = Exit_##x ; \
-                                                                            return tmp; }
+#define CONSTRUCTOR_BASE(x)                           \
+    static Scene *Construct_##x(const char name[256]) \
+    {                                                 \
+        Scene *tmp = CreateScene(name);               \
+        if (tmp == NULL)                              \
+            return NULL;                              \
+        tmp->Initialize = Initialize_##x;             \
+        tmp->Render = Render_##x;                     \
+        tmp->Update = Update_##x;                     \
+        tmp->Destroy = Destroy_##x;                   \
+        tmp->Enter = Enter_##x;                       \
+        tmp->Exit = Exit_##x;                         \
+        return tmp;                                   \
+    }
 
 #define INITIALIZE_L0(x) INITIALIZE_BASE(x)
 #define RENDER_L0(x) RENDER_BASE(x)
@@ -53,19 +59,19 @@ struct Scene{
 #define EXIT EXIT_L0(CLASS_NAME)
 #define CONSTRUCTOR CONSTRUCTOR_L0(CLASS_NAME)
 
-#define NEW(x) Construct_##x 
+#define NEW(x) Construct_##x
 
-Scene*
+Scene *
 CreateScene(const char name[256]);
 
-void
-DestroyScene(Scene* scene);
+void DestroyScene(Scene *scene);
 
 typedef enum {
     SceneManagerType_Stack
 } SceneManagerType;
 
-struct SceneManager{
+struct SceneManager
+{
     Scene AsScene;
     SceneManagerType Type;
 
@@ -75,32 +81,28 @@ struct SceneManager{
     Scene **Scenes;
 };
 
-SceneManager* 
-CreateSceneManager(SceneManagerType     type,
-                   const char           name[256],
-                   int                  MaxSceneCount);
+SceneManager *
+CreateSceneManager(SceneManagerType type,
+                   const char name[256],
+                   int MaxSceneCount);
 
-void
-DestroySceneManager(SceneManager    *man);
+void DestroySceneManager(SceneManager *man);
 
-int
-PushScene(SceneManager   *man, 
-          Scene          *scene);
+int PushScene(SceneManager *man,
+              Scene *scene);
 
-Scene*
-PopScene(SceneManager    *man);
+Scene *
+PopScene(SceneManager *man);
 
-Scene*
-ReplaceCurrentScene(SceneManager    *man,
-                    Scene           *scene);
+Scene *
+ReplaceCurrentScene(SceneManager *man,
+                    Scene *scene);
 
-SceneManager*
+SceneManager *
 GetMainSceneManager(void);
 
-void
-ExitSceneEngine(int code);
+void ExitSceneEngine(int code);
 
-int
-StartSceneEngine(SceneManager *main_manager);
+int StartSceneEngine(SceneManager *main_manager);
 
 #endif

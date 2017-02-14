@@ -3,17 +3,16 @@
 
 #include <psp2/apputil.h>
 
-#define DATA_STORE_URL 
+#define DATA_STORE_URL "https://raw.githubusercontent.com/himanshugoel2797/HBN_Data/master/"
 
 const int supportedLanguages[] = {
     SCE_SYSTEM_PARAM_LANG_ENGLISH_US,
-    -1
-};
+    -1};
 
 static int language;
 
-void
-InitializeComs(void) {
+void InitializeComs(void)
+{
     //Default to English
     language = SCE_SYSTEM_PARAM_LANG_ENGLISH_US;
 
@@ -26,16 +25,17 @@ InitializeComs(void) {
     sceAppUtilInit(&init_param, &boot_param);
     sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_LANG, &sys_lang);
     SetLanguage(sys_lang);
-    
-    //Download basic data
 
+    //Download basic data
 }
 
-int
-SetLanguage(int name) {
+int SetLanguage(int name)
+{
     int *iterator = supportedLanguages;
-    while(*iterator != -1){
-        if(*iterator == name){
+    while (*iterator != -1)
+    {
+        if (*iterator == name)
+        {
             language = sys_lang;
             return 0;
         }
@@ -45,47 +45,38 @@ SetLanguage(int name) {
     return -1;
 }
 
-int
-CheckForUpdates(void) {
-
+int CheckForUpdates(void)
+{
 }
 
-int
-ApplyUpdate(void) {
-
+int ApplyUpdate(void)
+{
 }
 
-int
-GetCategoryCount(void) {
-
+int GetCategoryCount(void)
+{
 }
 
-void
-GetCategoryName(int index, char name[256]) {
-
+void GetCategoryName(int index, char name[256])
+{
 }
 
-int
-GetSubCategoryCount(int cat) {
-
+int GetSubCategoryCount(int cat)
+{
 }
 
-void
-GetSubCategoryName(int cat, int index, char name[256]) {
-
+void GetSubCategoryName(int cat, int index, char name[256])
+{
 }
 
-int
-GetSubCategoryHomebrewCount(int cat, int sub_cat) {
-
+int GetSubCategoryHomebrewCount(int cat, int sub_cat)
+{
 }
 
-int
-GetSubCategoryHomebrewID(int cat, int sub_cat) {
-
+int GetSubCategoryHomebrewID(int cat, int sub_cat)
+{
 }
 
-int
-GetHomebrewInfo(int id, HomebrewInfo *info) {
-
+int GetHomebrewInfo(int id, HomebrewInfo *info)
+{
 }
