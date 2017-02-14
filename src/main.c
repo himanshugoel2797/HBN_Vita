@@ -3,13 +3,16 @@
 
 #include "helpers/display.h"
 #include "helpers/net.h"
+#include "helpers/file.h"
+#include "helpers/hbn_coms.h"
 
 int main()
 {
-
     //Initialize required services
     InitializeNet();
     InitializeDisplay();
+    InitializeFileStore();
+    InitializeComs();
 
     //Setup scene management
     SceneManager *main_scene_man = CreateSceneManager(SceneManagerType_Stack, "MainSceneMan", 8);

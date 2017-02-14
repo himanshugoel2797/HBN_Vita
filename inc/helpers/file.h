@@ -5,7 +5,7 @@
 
 #define TMP_DATA_PATH "ux0:data/THBN00001"
 
-void FileStoreInitialize(void);
+void InitializeFileStore(void);
 
 bool Exists(const char *path, bool IsDir);
 

@@ -1,12 +1,15 @@
 #include "helpers/file.h"
 
+#include <string.h>
+#include <stdio.h>
+
 #include <psp2/io/fcntl.h>
 #include <psp2/io/dirent.h>
 #include <psp2/io/stat.h>
 
 static int tmp_name_idx = 0;
 
-void FileStoreInitialize(void)
+void InitializeFileStore(void)
 {
     if (!Exists(TMP_DATA_PATH, true))
         sceIoMkdir(TMP_DATA_PATH, 0777);
@@ -42,5 +45,5 @@ void ConcatPath(char buffer[512], const char *path_base, const char *part)
 
 void GetTmpFileName(char name[64], const char *ext)
 {
-    snprintf(name, "/tmp%d.%s" tmp_name_idx++, ext);
+    snprintf(name, 64, TMP_DATA_PATH"/tmp%d%s", tmp_name_idx++, ext);
 }
