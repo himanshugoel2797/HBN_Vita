@@ -16,13 +16,6 @@ typedef enum {
     AppTreeEntryType_Application
 } AppTreeEntryType;
 
-typedef struct
-{
-    char locale[4];
-    char *string;
-
-} LocalizedString;
-
 typedef struct AppTreeData AppTreeData;
 typedef struct
 {
@@ -32,7 +25,7 @@ typedef struct
 
 struct AppTreeData
 {
-    LocalizedString *Name;
+    char Name[512];
     int NameCount;
     int ID;
     AppTreeEntryType Type;
@@ -63,17 +56,7 @@ int CheckForUpdates(void);
 
 int ApplyUpdate(void);
 
-int GetCategoryCount(void);
-
-void GetCategoryName(int index, char name[256]);
-
-int GetSubCategoryCount(int cat);
-
-void GetSubCategoryName(int cat, int index, char name[256]);
-
-int GetSubCategoryHomebrewCount(int cat, int sub_cat);
-
-int GetSubCategoryHomebrewID(int cat, int sub_cat);
+ItemList* GetCategoryItems(void);
 
 int GetHomebrewInfo(int id, HomebrewInfo *info);
 

@@ -26,6 +26,6 @@ LoadTexturePNG(const char *file);
 
 void FreeTexture(Texture *tex);
 
-void DrawTexture(const Texture *tex, int x, int y);
+void DrawTexture(const Texture *tex, int x, int y, uint32_t tint);
 
 #endif

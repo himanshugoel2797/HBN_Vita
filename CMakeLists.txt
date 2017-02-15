@@ -60,6 +60,9 @@ add_executable(psvhbn
   src/helpers/hbn_coms.c
   src/scenes/entry_scene.c
   src/scenes/gekihen_scene.c
+  src/scenes/com_init_thread.c
+  src/scenes/category_scene.c
+  src/ui/ui.c
   src/main.c
 )
 

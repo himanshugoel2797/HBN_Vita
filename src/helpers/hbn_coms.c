@@ -9,6 +9,10 @@
 
 #define DATA_STORE_URL "https://raw.githubusercontent.com/himanshugoel2797/HBN_Data/master/"
 #define BASE_FILENAME "/base.json"
+#define HOMEBREW_FILENAME "/homebrew.json"
+
+#define CUR_MAJOR_VER 0
+#define CUR_MINOR_VER 1
 
 struct LocaleNameMapping{
     char name[4];
@@ -20,32 +24,56 @@ const int supportedLanguages[] = {
     -1};
 
 const struct LocaleNameMapping name_mappings[] = {
-    {"us", SCE_SYSTEM_PARAM_LANG_ENGLISH_US}
+    {"us", SCE_SYSTEM_PARAM_LANG_ENGLISH_US},
     {"", -1}
-}
+};
 
 static int language;
 static BaseData base_data;
+
+static void ParseItems(json_value *val, ItemList *itemList);
+static void FillItemList(json_value *val, ItemList *itemList);
 
 static void ParseItem(json_value *val, AppTreeData *item)
 {
     int cnt = val->u.object.length;
     for (int i = 0; i < cnt; i++)
     {
+
         char *name = val->u.object.values[i].name;
         json_value *value = val->u.object.values[i].value;
 
         if (strcmp(name, "Name") == 0)
         {
             //TODO parse the localized names
+            for(int j = 0; j < value->u.array.length; j++){
+                
+                json_value *array_item = value->u.array.values[j];
+                char *locale_name = array_item->u.object.values[0].name;
+                json_value *value = array_item->u.object.values[0].value;
+
+                int k = 0;
+                while(name_mappings[k].val != -1) {
+                    if((name_mappings[k].val == language) && (strcmp(name_mappings[k].name, locale_name) == 0))
+                        strcpy(item->Name, value->u.string.ptr);
+
+                    k++;
+                }
+            }
         }
         else if (strcmp(name, "File") == 0)
         {
             char url[URL_LEN];
             char tmp_path[64];
-            ConcatPath(url, DATA_STORE_URL, value->u.string.ptr);
-            GetTmpFileName(tmp_path, ".json");
-            DownloadFile(url, tmp_path);
+
+            if(strlen(value->u.string.ptr) > 0){
+                ConcatPath(url, DATA_STORE_URL, value->u.string.ptr);
+                GetTmpFileName(tmp_path, ".json");
+                DownloadFile(url, tmp_path);
+
+                json_value *tmp_file = ParseJsonFile(tmp_path);
+                FillItemList(tmp_file, &item->Items);
+            }
             strcpy(item->File, tmp_path);
         }
         else if (strcmp(name, "Icon") == 0)
@@ -115,6 +143,8 @@ void InitializeComs(void)
 
         if (strcmp(name, "LatestAppVer") == 0)
         {
+            base_data.LatestMajorVer = value->u.array.values[0]->u.integer;
+            base_data.LatestMinorVer = value->u.array.values[1]->u.integer;
         }
         else if (strcmp(name, "AppDownloadURL") == 0)
         {
@@ -145,36 +175,26 @@ int SetLanguage(int name)
 
 int CheckForUpdates(void)
 {
+    return (base_data.LatestMajorVer != CUR_MAJOR_VER) | (base_data.LatestMinorVer != CUR_MINOR_VER);
 }
 
 int ApplyUpdate(void)
 {
+    if(CheckForUpdates()){
+        //TODO
+
+        return 1;
+    }
+
+    return 0;
 }
 
-int GetCategoryCount(void)
+ItemList* GetCategoryItems(void)
 {
-}
-
-void GetCategoryName(int index, char name[256])
-{
-}
-
-int GetSubCategoryCount(int cat)
-{
-}
-
-void GetSubCategoryName(int cat, int index, char name[256])
-{
-}
-
-int GetSubCategoryHomebrewCount(int cat, int sub_cat)
-{
-}
-
-int GetSubCategoryHomebrewID(int cat, int sub_cat)
-{
+    return &base_data.Items;
 }
 
 int GetHomebrewInfo(int id, HomebrewInfo *info)
 {
+    return 0;
 }

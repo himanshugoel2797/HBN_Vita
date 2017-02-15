@@ -59,6 +59,6 @@ FreeTexture(Texture *tex) {
 }
 
 void
-DrawTexture(const Texture *tex, int x, int y) {
-    vita2d_draw_texture(tex, x, y);
+DrawTexture(const Texture *tex, int x, int y, uint32_t tint) {
+    vita2d_draw_texture_tint(tex, x, y, tint);
 }
