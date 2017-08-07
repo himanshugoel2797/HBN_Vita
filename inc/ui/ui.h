@@ -18,15 +18,6 @@ typedef enum {
     Orientation_Horizontal
 } Orientation;
 
-typedef enum {
-    ControlType_FlowLayoutPanel,
-    ControlType_SplitLayoutPanel,
-    ControlType_FreeLayoutPanel,
-    ControlType_ImageBox,
-    ControlType_Label,
-    ControlType_Button
-} ControlType;
-
 typedef struct Control{
     int X;
     int Y;
@@ -34,7 +25,6 @@ typedef struct Control{
     int Height;
     bool Enabled;
     void *ObjectState;
-    ControlType Type;
 
     void (*Activate)(Control *this_ctrl);
     void (*Deactivate)(Control *this_ctrl);
@@ -86,14 +76,6 @@ typedef struct Label {
     uint32_t FGColor;
     uint32_t BGColor;
 } Label;
-
-typedef struct Window {
-    Control ControlData;
-    uint32_t BGColor;
-} Window;
-
-Window*
-CreateWindow(uint32_t bg_col);
 
 Control*
 CreateControl(int size);
